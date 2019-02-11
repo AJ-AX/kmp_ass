@@ -2,11 +2,37 @@
 
 int string_matching_kmp(char *text, int N, char* pattern, int M){
 	int count = 0;
+    int ops = 0;
+    //printf("Test");
 	int *overlap_list = overlap_array(pattern, M);
-	printf("overlap function: ");
-	print_array(overlap_list,M);
+	//printf("overlap function: ");
+	//print_array(overlap_list,M);
 	
 	//TODO - implement kmp search
+    int x = 0;
+    int y = 0;
+
+    while(x < N){
+        if(text[x] == pattern[y]){
+            y++;
+            x++;
+            if(y == M){
+                count++;
+                y = overlap_list[y-1];
+            }
+        }
+        else{
+            if(y != 0){
+                y = overlap_list[y-1];
+            }
+            else{
+                x++;
+            }
+        }
+        ops++;
+    }
+
+    printf("\nKMP Algorithmn Operations Completed: %d", ops);
 	free(overlap_list);
 	return count;
 }
@@ -52,3 +78,8 @@ int * overlap_array(char* pattern, int M){
 	}
     return ol_list;
 }
+
+/*int main(){
+    int p = string_matching_kmp("testhetesztetestestestes", 24, "tes", 3);
+    printf("\n%d", p);
+}*/

@@ -30,12 +30,15 @@ void stress_test(int N, int M){
 	  int pos = rand() % (int)(sizeof(charset) -1);
       text[i] = charset[pos];      
     }
+    text[n+1] = '\0';
 	
 	char *pattern = malloc(m);
     for (int i=0; i<m; i++){
 	  int pos = rand() % (int)(sizeof(charset) -1);
       pattern[i] = charset[pos];      
     }
+
+    pattern[m+1] = '\0';
     
     printf("text='%s', pattern='%s'\n", text, pattern);
 	
@@ -43,9 +46,9 @@ void stress_test(int N, int M){
     int result2 = string_matching_kmp(text, n, pattern, m);
     
     if (result1==result2)
-      printf("OK\n");
+      printf("\nBoth Answers Correct. Answer: %d\n\n\n", result1);
     else {
-      printf("Wrong answer: correct=%d, got instead=%d\n", result1, result2);
+      printf("\nWrong answer: correct=%d, got instead=%d\n", result1, result2);
 	  exit(0);
 	}
 	free(text);
@@ -79,6 +82,8 @@ int main(int argc, char **argv ){
    int M = atoi(argv[3]);
    
    stress_test(N, M);
+
+
    
    return 0;
   
